@@ -3,17 +3,17 @@ const routes = [
     {
         path: "/login",
         name: "Login",
-        component: () => import('../views/LoginPage.vue')
+        component: () => import('../views/SigninPage.vue')
     },
     {
         path: "/signup",
         name: "signup",
-        component: () => import('../components/Signup.vue')
+        component: () => import('../views/SignupPage.vue')
     },
     {
-        path: '/main',
+        path: '/',
         name: "Navbar",
-        component: () => import ('../components/Navbar.vue')
+        component: () => import ('../views/HomePage.vue')
     }
 ];
     const router = createRouter({
