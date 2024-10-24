@@ -9,7 +9,7 @@
       <div>
         <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
         <div class="mt-2">
-          <Field v-model="user.name" name="name" type="email"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+          <Field v-model="user.username" name="name" type="email"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
           <ErrorMessage name="name" class="error-feedback"/>
         </div>
       </div>
@@ -19,6 +19,14 @@
         <div class="mt-2">
           <Field v-model="user.email" name="email" type="email"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
           <ErrorMessage name="email" class="error"/>
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium leading-6 text-gray-900">password</label>
+        <div class="mt-2">
+          <Field v-model="user.password" name="password" type="password"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+          <ErrorMessage name="password" class="error"/>
         </div>
       </div>
 
@@ -39,7 +47,7 @@
       </div>
 
       <div>
-        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign</button>
+        <button @click="submitUser"  class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign</button>
       </div>
     </Form>
   </div>
@@ -60,9 +68,10 @@ export default{
     emits: ["submit:user"],
     data(){
         const userFormSchema = Yup.object().shape({
-            name: Yup.string().required("Tên phải có giá trị"),
+            username: Yup.string().required("Tên phải có giá trị"),
             password: Yup.string().required("Nhập mật khẩu").min(5),
             address:Yup.string().required("Vui lòng nhập địa chỉ"),
+            email:Yup.string().required("Vui lòng nhập email").min(11),
             phone: Yup.string().required("Nhập số điện thoại").matches(/((09|03|07|08|05))+([0-9]{8}\b)/g,"Số điện thoại không có giá trị"),
         });
         return {
