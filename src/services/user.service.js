@@ -4,13 +4,17 @@ class UserService{
     constructor(baseUrl = "/api/user"){
         this.api = createApiClient(baseUrl);
     }
+    async create(data) {
+        return (await this.api.post("/", data)).data;
+    }
+    async login(data){
+        return (await this.api.post("/login",data));
+    }
     async getAll()
     {
         return (await this.api.get("/")).data;
     }
-    async create(data){
-        return (await this.api.post("/",data)).data
-    }
+    
     async deleteAll() {
         return (await this.api.delete("/")).data;
     }
