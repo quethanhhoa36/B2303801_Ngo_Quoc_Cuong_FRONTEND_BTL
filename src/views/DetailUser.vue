@@ -1,7 +1,7 @@
 <template>
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Tạo tài khoản thư viện</h2>
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Thông tin người dùng</h2>
   </div>  
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -47,25 +47,28 @@
       </div>
 
       <div>
-        <button @click="submitUser"  class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign</button>
+        <button @click="updateUser(this.id,this.user)"  class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign</button>
       </div>
     </Form>
   </div>
 </div>    
+<RouterView/>
 </template>
 <script>
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import * as Yup from 'yup';
+import Header from '@/components/Header.vue';
+import Navbar from '@/components/Navbar.vue';
+import userService from '@/services/user.service';
+import { toast } from 'vue3-toastify';
+import Sidebar from '@/components/Sidebar.vue';
+
 export default{
     components:{
         Form,
         Field,
-        ErrorMessage
+        ErrorMessage,
     },
-    props: {
-      user: { type: Object, required: true}
-    },  
-    emits: ["submit:user"],
     data(){
         const userFormSchema = Yup.object().shape({
             username: Yup.string().required("Tên phải có giá trị"),
@@ -74,16 +77,35 @@ export default{
             email:Yup.string().required("Vui lòng nhập email").min(11),
             phone: Yup.string().required("Nhập số điện thoại").matches(/((09|03|07|08|05))+([0-9]{8}\b)/g,"Số điện thoại không có giá trị"),
         });
-        return {
-            userLocal: this.user,
-            userFormSchema,
+        return{
+            user:{},
+            id: this.$route.params.id,
+            userFormSchema
         };
     },
     methods:{
-        submitUser(){
-          this.$emit("submit:user",this.userLocal)
+        async getUser(id){
+            try{
+                this.user = await userService.get(id);
+            }
+            catch(error){
+                console.log(error);
+            }
+        },
+        async updateUser(id,data){
+            try{
+                await userService.update(id,data);
+                toast.success('Cập nhật thành công!',{
+                  autoClose: 3000,
+                });
+            }
+            catch(error){
+                console.log(error)
+            }
         }
-    }
-};
-
+    },
+    mounted(){
+        this.getUser(this.id);
+    },
+}
 </script>

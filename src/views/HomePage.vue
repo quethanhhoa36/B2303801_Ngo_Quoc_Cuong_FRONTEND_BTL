@@ -1,25 +1,47 @@
 <template>
-<Navbar :user="user" />
-<div class="bg-white">
-    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
-
-      <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-        <div v-for="product in products" :key="product.id" class="group relative">
-          <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-            <img :src="product.imageSrc" :alt="product.imageAlt" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
-          </div>
-          <div class="mt-4 flex justify-between">
-            <div>
-              <h3 class="text-sm text-gray-700">
-                <a :href="product.href">
-                  <span aria-hidden="true" class="absolute inset-0" />
-                  {{ product.name }}
-                </a>
-              </h3>
-              <p class="mt-1 text-sm text-gray-500">{{ product.color }}</p>
+<Navbar/>
+  <div class="relative overflow-hidden bg-white">
+    <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
+      <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
+        <div class="sm:max-w-lg">
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Hệ thống quản lý mượn sách</h1>
+          <p class="mt-4 text-xl text-gray-500">This year, our new summer collection will shelter you from the harsh elements of a world that doesn't care if you live or die.</p>
+        </div>  
+        <div>
+          <div class="mt-10">
+            <!-- Decorative image grid -->
+            <div aria-hidden="true" class="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl">
+              <div class="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
+                <div class="flex items-center space-x-6 lg:space-x-8">
+                  <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                    <div class="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
+                      <img src="https://i.pinimg.com/564x/97/f6/67/97f66752f30be411e48746c3bed73954.jpg" alt="" class="h-full w-full object-cover object-center" />
+                    </div>
+                    <div class="h-64 w-44 overflow-hidden rounded-lg">
+                      <img src="https://i.pinimg.com/564x/28/a5/38/28a53818427467bceef016911ed494b4.jpg" alt="" class="h-full w-full object-cover object-center" />
+                    </div>
+                  </div>
+                  <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                    <div class="h-64 w-44 overflow-hidden rounded-lg">
+                      <img src="https://i.pinimg.com/564x/0e/93/54/0e9354202f3c655eb33e92b9fc9d64d5.jpg" alt="" class="h-full w-full object-cover object-center" />
+                    </div>
+                    <div class="h-64 w-44 overflow-hidden rounded-lg">
+                      <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg" alt="" class="h-full w-full object-cover object-center" />
+                    </div>
+                  </div>
+                  <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                    <div class="h-64 w-44 overflow-hidden rounded-lg">
+                      <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg" alt="" class="h-full w-full object-cover object-center" />
+                    </div>
+                    <div class="h-64 w-44 overflow-hidden rounded-lg">
+                      <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg" alt="" class="h-full w-full object-cover object-center" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p class="text-sm font-medium text-gray-900">{{ product.price }}</p>
+
+            <a href="#" class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">Shop Collection</a>
           </div>
         </div>
       </div>
@@ -34,18 +56,9 @@ export default{
         Navbar,
     },
     data(){
-        return{
-            products:[{
-                id: 1,
-                name: 'Basic Tee',
-                href: '#',
-                imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg',
-                imageAlt: "Front of men's Basic Tee in black.",
-                price: '$35',
-                color: 'Black',
-            }],
-            user:userStore().user
-        }
-    },
+      return{
+        getUser: userStore().user,
+      }
+    }
 }
 </script>

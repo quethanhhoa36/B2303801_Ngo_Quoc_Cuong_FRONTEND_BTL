@@ -14,7 +14,24 @@ const routes = [
         path: '/',
         name: "Navbar",
         component: () => import ('../views/HomePage.vue')
+    },
+    {
+        path: '/dashboard/:id',
+        name:"userprofile",
+        component: ()=> import('../views/DetailUser.vue')
+    },
+    
+    {
+        path:'/dashboard',
+        name:'dashboard',
+        component: () => import('../views/Dashboard.vue')  
+    },
+    {
+        path:'/viewproduct',
+        name:'viewproduct',
+        component: () => import('../views/ViewProduct.vue')
     }
+
 ];
     const router = createRouter({
         history: createWebHistory(import.meta.env.BASE_URL),
