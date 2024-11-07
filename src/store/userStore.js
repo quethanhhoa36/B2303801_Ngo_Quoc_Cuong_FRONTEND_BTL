@@ -4,6 +4,7 @@ export const userStore = defineStore('user',{
     state:() => ({ 
         isLogin: false,
         user: null,
+        cart:{},
     }),
     getters:{
         getUser: ()=> {return this.user},

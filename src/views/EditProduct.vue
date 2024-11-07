@@ -59,7 +59,7 @@
             </header>
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                 <div class="container px-6 py-8 mx-auto">
-                    <h3 class="text-3xl font-medium text-gray-700">Thêm sản phẩm</h3>
+                    <h3 class="text-3xl font-medium text-gray-700">Chỉnh sửa sản phẩm</h3>
     
                     <form enctype="multipart/form-data" action="">
                         <div class="mt-4 flex">
@@ -99,7 +99,7 @@
                         </div>
                         
                     </div>
-                    <button type="button" @click="createProduct(this.product)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Default</button>
+                    <button type="button" @click="updateProduct(this.$route.params.id,this.product)" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Default</button>
 
                     </form>
                 </div>
@@ -138,16 +138,15 @@ export default{
         uploadImg(e){
                 const image = e.target.files[0];
                 this.product.image = e.target.files[0];
-                console.log(this.product)
+                console.log(this.product.image)
                 const reader = new FileReader();
                 reader.readAsDataURL(image);
                 reader.onload = e =>{
                     this.previewImage = e.target.result;
                     this.product.image.data = e.target.result
-                    console.log(this.previewImage);
                 };
             },
-        async createProduct(data){
+        async updateProduct(id,data){
             try{
                 const formData = new FormData();
                 formData.append('productname',data.productname)
@@ -156,7 +155,7 @@ export default{
                 formData.append('author',data.author)
                 formData.append('category',data.category)
                 formData.append('NXB',data.NXB)
-                await productService.create(formData)
+                await productService.update(id,formData)
                     .then(data=>console.log(data))
                     .catch((e)=>console.log(e))
                 toast.success('Thêm sản phẩm thành công!',{
@@ -164,9 +163,16 @@ export default{
                 });
             }
             catch(error){
-
+                console.log(error)
             }
+        },
+        async RetrieveProduct(data){
+            this.product= await productService.get(data)
+            this.previewImage =this.product.image.data
         }
+    },
+    mounted(){
+        this.RetrieveProduct(this.$route.params.id)
     }
 }
 </script>

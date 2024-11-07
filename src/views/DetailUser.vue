@@ -1,4 +1,5 @@
 <template>
+  <Navbar/>
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Thông tin người dùng</h2>
@@ -61,13 +62,13 @@ import Header from '@/components/Header.vue';
 import Navbar from '@/components/Navbar.vue';
 import userService from '@/services/user.service';
 import { toast } from 'vue3-toastify';
-import Sidebar from '@/components/Sidebar.vue';
 
 export default{
     components:{
         Form,
         Field,
         ErrorMessage,
+        Navbar
     },
     data(){
         const userFormSchema = Yup.object().shape({

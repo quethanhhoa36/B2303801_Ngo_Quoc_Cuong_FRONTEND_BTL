@@ -30,7 +30,32 @@ const routes = [
         path:'/viewproduct',
         name:'viewproduct',
         component: () => import('../views/ViewProduct.vue')
-    }
+    },
+    {
+        path:'/addproduct',
+        name:'addproduct',
+        component: () => import('../views/Addproduct.vue')
+    },
+    {
+        path:'/viewproduct/:id',
+        name:'editproduct',
+        component: () => import('../views/EditProduct.vue')
+    },
+    {
+        path:'/loginuser',
+        name:'loginuser',
+        component: () => import('../views/CustomerLogin.vue')
+    },
+    {
+        path:'/preview',
+        name:'userview',
+        component: () => import('../views/CustomerProduct.vue')
+    },
+    {
+        path:'/previewproduct/:id',
+        name:'preview',
+        component: () => import('../views/Overview.vue')
+    },
 
 ];
     const router = createRouter({

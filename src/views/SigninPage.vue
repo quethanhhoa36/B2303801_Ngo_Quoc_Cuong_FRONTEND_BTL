@@ -13,11 +13,13 @@ export default{
         async loginUser(data){
                     UserService.login(data)
                         .then((res)=>{
-                            if(res.data.length){
-                            console.log(res.data[0]);
-                            this.login(res.data[0]);
-						// alert("Login successful!");
-                            this.$router.push('/');
+                            if(res.length){
+                            if(!res[0].isAdmin){
+                                alert("Incorrect password!");
+                            }else{
+                                this.$router.push('/dashboard');
+                                this.login(res[0])
+                            }
                         } else alert("Incorrect password!");
                         })
             },

@@ -1,15 +1,16 @@
 import axios from 'axios';
 import createApiClient from './api.service';
 
-class UserService{
-    constructor(baseUrl = "/api/user"){
+class ProductService{
+    constructor(baseUrl = "/api/product"){
         this.api = createApiClient(baseUrl);
     }
     async create(data) {
-        return (await this.api.post("/", data)).data;
-    }
-    async login(data){
-        return (await this.api.post("/login",data)).data;
+        return (await this.api.post("/", data ,{
+            headers: {
+                'Content-Type': 'multipart/form-data' // Đảm bảo Content-Type là multipart/form-data
+            }
+        })).data;
     }
     async getAll()
     {
@@ -30,11 +31,14 @@ class UserService{
         return (await this.api.get(`/${id}`)).data;
     }
     async update(id, data) {
-        return (await this.api.put(`/${id}`, data)).data;
+        return (await this.api.put(`/${id}`, data,{
+            headers: {
+                'Content-Type': 'multipart/form-data' // Đảm bảo Content-Type là multipart/form-data
+            }
+        })).data;
     }   
     async delete(id) {
         return (await this.api.delete(`/${id}`)).data;
     }
 }
-export default new UserService()
-
+export default new ProductService()
