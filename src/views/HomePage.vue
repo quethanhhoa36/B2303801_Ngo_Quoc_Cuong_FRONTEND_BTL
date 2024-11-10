@@ -4,8 +4,7 @@
     <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
       <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
         <div class="sm:max-w-lg">
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Hệ thống quản lý mượn sách</h1>
-          <p class="mt-4 text-xl text-gray-500">This year, our new summer collection will shelter you from the harsh elements of a world that doesn't care if you live or die.</p>
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Thư viện - Nhà sách</h1>
         </div>  
         <div>
           <div class="mt-10">
@@ -47,18 +46,31 @@
       </div>
     </div>
   </div>
+<!-- <MySwiper/> -->
 </template>
 <script>
 import Navbar from '@/components/Navbar.vue';
-import { userStore } from '@/store/userStore';
+import productService from '@/services/product.service';
+import MySwiper from '@/components/MySwiper.vue';
+
 export default{
     components:{
         Navbar,
+        // MySwiper,
     },
     data(){
       return{
-        getUser: userStore().user,
+        productToDisPlay:{}
       }
-    }
+    },
+
+
+    methods:{
+      async RetrieveProduct(){
+        this.productToDisPlay= await productService.getAll();
+        console.log(this.productToDisPlay)
+      }
+    },    
+    
 }
 </script>

@@ -52,7 +52,7 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 py-8">
                             <div class="flex sm:items-center sm:justify-center w-full">
-                                <button
+                                <button @click="this.quantity--"
                                     class="group py-4 px-6 border border-gray-400 rounded-l-full bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-300">
                                     <svg class="stroke-gray-900 group-hover:stroke-black" width="22" height="22"
                                         viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,10 +63,10 @@
                                             stroke-linecap="round" />
                                     </svg>
                                 </button>
-                                <input type="text"
+                                <input :value="this.quantity" type="number"
                                     class="font-semibold text-gray-900 cursor-pointer text-lg py-[13px] px-6 w-full sm:max-w-[118px] outline-0 border-y border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50"
                                     placeholder="1">
-                                <button
+                                <button @click="this.quantity++"
                                     class="group py-4 px-6 border border-gray-400 rounded-r-full bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-300">
                                     <svg class="stroke-gray-900 group-hover:stroke-black" width="22" height="22"
                                         viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,7 +79,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <button
+                            <button @click="addToCart(this.$route.params.id)"
                                 class="group py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-100">
                                 <svg class="stroke-indigo-600 " width="22" height="22" viewBox="0 0 22 22" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -99,16 +99,20 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import productService from '@/services/product.service';
+import { userStore } from '@/store/userStore';
+import { toast } from 'vue3-toastify';
+
 export default{
     components:{
         Navbar
     },
     data(){
         return {
+            quantity: 1,
             product:{
                 productname:'',
                 description:'',
-                image:null,
+                image:{},
                 author:'',
                 category:'',
                 NXB:''
@@ -120,6 +124,38 @@ export default{
             this.product= await productService.get(id)
             console.log(this.product)
         },
+        addToCart(data){
+            if(!localStorage.getItem('cart')){
+                const cart = []
+                cart.push({
+                    id:data,
+                    img:this.product.image,
+                    name:this.product.productname,
+                    quantity:this.quantity
+                })
+                localStorage.setItem('cart',JSON.stringify(cart))
+            }else{
+                const cart = JSON.parse(localStorage.getItem('cart'))
+                cart.forEach(car => {
+                    if(car.id==data){
+                        car.id=data
+                        car.quantity+=this.quantity
+                    }                    
+                });
+                if(!cart.find(car => car.id==data)){
+                    cart.push({
+                        id:data,
+                        img:this.product.image,
+                        name:this.product.productname,
+                        quantity:this.quantity
+                    })
+                }
+                localStorage.setItem('cart',JSON.stringify(cart))
+
+            }
+            
+        }
+
     },
 
     mounted(){

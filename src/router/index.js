@@ -56,6 +56,24 @@ const routes = [
         name:'preview',
         component: () => import('../views/Overview.vue')
     },
+    {
+        path:'/cart',
+        name:'cart',
+        component:()=> import('../views/Cart.vue')
+    },
+    {
+        path:'/user/:id',
+        name:'information',
+        component:()=> import('../views/InforUserPage.vue')
+    },
+    {
+        path:'/admincart/:id',
+        name:'cartdetail',
+    },
+    {
+        path:'/admincart',
+        name:'admincart'
+    }
 
 ];
     const router = createRouter({

@@ -50,7 +50,8 @@ export default{
                         .then((res)=>{
                             if(res.length){
                                 this.$router.push('/')
-                                this.login(res[0])
+                                console.log(res[0])
+                                this.login(res[0]._id)
                         } else alert("Incorrect password!");
                         })
             },

@@ -58,7 +58,6 @@
 <script>
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import * as Yup from 'yup';
-import Header from '@/components/Header.vue';
 import Navbar from '@/components/Navbar.vue';
 import userService from '@/services/user.service';
 import { toast } from 'vue3-toastify';

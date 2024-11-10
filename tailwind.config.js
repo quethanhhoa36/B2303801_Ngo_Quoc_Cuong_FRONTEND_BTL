@@ -5,6 +5,6 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/forms'),('flowbite/plugin')],
+  plugins: [require('@tailwindcss/forms'),require('flowbite/plugin'),require('@tailwindcss/forms')],
 }
 
