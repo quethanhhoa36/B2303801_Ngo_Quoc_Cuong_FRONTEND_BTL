@@ -22,7 +22,7 @@
                                     </thead>
     
                                     <tbody class="bg-white">
-                                        <tr v-for="user in userLists">
+                                        <tr v-for="user in userLists " class="hover:bg-gray-200">
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                 <div class="flex items-center">
                                                     
@@ -49,7 +49,7 @@
     
                                             <td
                                                 class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap border-b border-gray-200">
-                                                <a @click="link(user._id)" href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                                <a @click="link(user._id)" href="#" class="text-indigo-600 hover:text-indigo-900">Chỉnh sửa</a>
                                             </td>
                                         </tr>
                                     </tbody>

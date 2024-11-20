@@ -25,52 +25,81 @@
                       <img src="https://i.pinimg.com/564x/0e/93/54/0e9354202f3c655eb33e92b9fc9d64d5.jpg" alt="" class="h-full w-full object-cover object-center" />
                     </div>
                     <div class="h-64 w-44 overflow-hidden rounded-lg">
-                      <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg" alt="" class="h-full w-full object-cover object-center" />
+                      <img src="https://i.pinimg.com/736x/8b/75/d8/8b75d8fbfb272b583917f9b60709e56d.jpg" alt="" class="h-full w-full object-cover object-center" />
                     </div>
                   </div>
                   <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                     <div class="h-64 w-44 overflow-hidden rounded-lg">
-                      <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg" alt="" class="h-full w-full object-cover object-center" />
+                      <img src="https://i.pinimg.com/236x/5c/8c/0a/5c8c0a86ba91c3ac9ea6b7c71cef4405.jpg" alt="" class="h-full w-full object-cover object-center" />
                     </div>
                     <div class="h-64 w-44 overflow-hidden rounded-lg">
-                      <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg" alt="" class="h-full w-full object-cover object-center" />
+                      <img src="https://i.pinimg.com/236x/6d/0c/d2/6d0cd23779c2016e9950be4d25722ec9.jpg" alt="" class="h-full w-full object-cover object-center" />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <a href="#" class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">Shop Collection</a>
+            <a href="#" class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"><RouterLink to="/preview">Mượn sách</RouterLink></a>
           </div>
         </div>
       </div>
     </div>
   </div>
-<!-- <MySwiper/> -->
+<MySwiper :items="items"/>
 </template>
 <script>
 import Navbar from '@/components/Navbar.vue';
 import productService from '@/services/product.service';
-import MySwiper from '@/components/MySwiper.vue';
-
+import MyCarouSel from '@/components/MyCarouSel.vue';
 export default{
     components:{
         Navbar,
-        // MySwiper,
+        MySwiper: MyCarouSel,
     },
     data(){
       return{
-        productToDisPlay:{}
+        items:[
+                {
+                    image:'https://cdn0.fahasa.com/media/catalog/product/9/7/9786043651591_1.jpg',
+                    title:'Lén Nhặt Chuyện Đời',
+                    description:'sách hay',
+                },
+                {
+                    image:'https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_41170.jpg',
+                    title:'Trường Ca Achiles',
+                    description:'sách hay',
+                },
+                {
+                    image:'https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg',
+                    title:'Nhà Giả Kim',
+                    description:'sách nổi tiếng',
+                },
+                {
+                    image:'https://cdn0.fahasa.com/media/catalog/product/8/9/8934974182375.jpg',
+                    title:'Người Đàn Ông Mang Tên OVE',
+                    description:'sách nổi tiếng',
+                },
+                {
+                    image:'https://cdn0.fahasa.com/media/catalog/product/i/m/image_217480.jpg',
+                    title:'Cây Cam Ngọt Của Tôi',
+                    description:'sách nổi tiếng',
+                },
+                {
+                    image:'https://cdn0.fahasa.com/media/catalog/product/s/u/suoi-am-mat-troi-01-_1_.jpg',
+                    title:'Sưởi Ấm Mặt Trời',
+                    description:'sách nổi tiếng',
+                },
+                {
+                    image:'https://cdn0.fahasa.com/media/catalog/product/i/m/image_231202.jpg',
+                    title:'Người Bà Tài Giỏi Vùng Saga',
+                    description:'sách nổi tiếng',
+                },
+            ]
       }
     },
 
 
-    methods:{
-      async RetrieveProduct(){
-        this.productToDisPlay= await productService.getAll();
-        console.log(this.productToDisPlay)
-      }
-    },    
     
 }
 </script>

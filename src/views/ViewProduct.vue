@@ -6,7 +6,7 @@
         <Sidebar :isViewsProduct="true"/>
         
         <div class="flex flex-col flex-1 overflow-hidden">
-            <header class="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-indigo-600">
+<header class="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-indigo-600">
                 <div class="flex items-center">
                     <button class="text-gray-500 focus:outline-none lg:hidden">
                         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,34 +30,7 @@
                     </div>
                 </div>
     
-                <div class="flex items-center">
-                    
-    
-                    <div x-data="{ dropdownOpen: false }" class="relative">
-                        <button @click="dropdownOpen = ! dropdownOpen"
-                            class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none">
-                            <img class="object-cover w-full h-full"
-                                src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=296&amp;q=80"
-                                alt="Your avatar">
-                        </button>
-    
-                        <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"
-                            style="display: none;"></div>
-    
-                        <div x-show="dropdownOpen"
-                            class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
-                            style="display: none;">
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Profile</a>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Products</a>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+            </header>            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                 <div class="container px-6 py-8 mx-auto">
                     <h3 class="text-3xl font-medium text-gray-700">Dashboard</h3>
     
@@ -90,8 +63,8 @@
                                     </div>
     
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700"></h4>
-                                        <div class="text-gray-500">New Users</div>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{{ users.length }}</h4>
+                                        <div class="text-gray-500">Người dùng</div>
                                     </div>
                                 </div>
                             </div>
@@ -114,8 +87,8 @@
                                     </div>
     
                                     <div class="mx-5">
-                                        <h4 class="text-2xl font-semibold text-gray-700">200,521</h4>
-                                        <div class="text-gray-500">Total Orders</div>
+                                        <h4 class="text-2xl font-semibold text-gray-700">{{ this.carts.length }}</h4>
+                                        <div class="text-gray-500">Tổng đơn hàng</div>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +108,7 @@
     
                                     <div class="mx-5">
                                         <h4 class="text-2xl font-semibold text-gray-700">{{ products.length }}</h4>
-                                        <div class="text-gray-500">Available Products</div>
+                                        <div class="text-gray-500">Số lượng sản phẩm có sẵn</div>
                                     </div>
                                 </div>
                             </div>
@@ -163,6 +136,8 @@ import Sidebar from '@/components/Sidebar.vue';
 import Pagination from '@/components/Pagination.vue';
 import Product from '@/components/ProductList.vue';
 import productService from '@/services/product.service';
+import cartService from '@/services/cart.service';
+import userService from '@/services/user.service';
 export default{
     components:{
         Sidebar,
@@ -176,7 +151,8 @@ export default{
             searchText:"",
             productsPerPage:[],
             pageValue:1,
-            tmp:[]
+            tmp:[],
+            carts:[]
         }
     },
     computed:{
@@ -228,11 +204,21 @@ export default{
             catch(err){
                 console.log(err)
             }
+        },
+        async RetrievetCart(){
+            try{
+                this.carts= await cartService.getAll();
+            }
+            catch(err){
+                console.log(err)
+            }
         }
 },
     mounted(){
         this.RetrieveProduct()
         this.RetrieveProductPage();
+        this.RetrievetUser();
+        this.RetrievetCart();
     },
 
 }

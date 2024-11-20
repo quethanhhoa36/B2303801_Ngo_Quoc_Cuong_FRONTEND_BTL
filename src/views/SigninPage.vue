@@ -10,6 +10,10 @@ export default{
         LoginForm,
     },
     methods:{
+        isAuthenticated() {
+            const token = localStorage.getItem('isLoginAdmin');
+            return token !== false;
+        },
         async loginUser(data){
                     UserService.login(data)
                         .then((res)=>{
@@ -18,14 +22,14 @@ export default{
                                 alert("Incorrect password!");
                             }else{
                                 this.$router.push('/dashboard');
-                                this.login(res[0])
+                                this.login()
                             }
                         } else alert("Incorrect password!");
                         })
             },
-            login(Email) {
+            login() {
 			const usersStore = userStore();
-			usersStore.login( Email );
+			usersStore.loginAdmin();
 		},
     }
 }

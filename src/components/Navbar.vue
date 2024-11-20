@@ -55,7 +55,7 @@
             </button>
             <div class="flex"v-if= "this.userLogin==null">
                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"><RouterLink to="/loginuser">Đăng nhập</RouterLink></a>
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Đăng ký</a>
+                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"><RouterLink to="/signupUser">Đăng ký</RouterLink></a>
             </div>
           </div>
 
@@ -119,7 +119,7 @@ export default {
         this.$router.push('/loginuser')
       },
       linkUser(){
-        const id = localStorage.getItem('userId')
+        const id = JSON.parse(localStorage.getItem('userId'))
         this.$router.push('/user/'+id)
       }
     },

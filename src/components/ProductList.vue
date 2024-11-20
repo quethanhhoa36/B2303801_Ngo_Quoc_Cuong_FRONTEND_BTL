@@ -37,7 +37,7 @@
 
                 <td class="px-6 py-4">
                     <a @click="link(product._id)" href="#" class="font-medium mr-3 text-blue-600 dark:text-red-500 hover:underline">Chỉnh sửa</a>
-                    <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Xóa</a>
+                    <a @click="deleteProduct(product._id)" href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Xóa</a>
                 </td>
             </tr>
             
@@ -48,6 +48,8 @@
 </div>
 </template>
 <script>
+import productService from '@/services/product.service';
+
 
 export default{
     props:{
@@ -60,6 +62,12 @@ export default{
         },
         getImgUrl(img){
             return img.data;
+        },
+        async deleteProduct(id){
+            if(confirm("Bạn muốn xóa sản phẩm này ?")){
+                await productService.delete(id);
+                location.reload
+            }
         }
     },
     

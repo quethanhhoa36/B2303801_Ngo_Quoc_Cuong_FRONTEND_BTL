@@ -14,7 +14,7 @@
         <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
           <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
         </svg>
-        Home
+        Trang chủ
       </a>
     </li>
     <li aria-current="page">
@@ -26,15 +26,9 @@
       </div>
     </li>
   </ol>
-</nav>
-    <div class="border-b border-gray-900/10 pb-12">
-      <h2 class="text-base/7 font-semibold text-gray-900">Thông tin</h2>
-
-    </div>
-
+    </nav>
     <div class="border-b border-gray-900/10 pb-12">
       <h2 class="text-base/7 font-semibold text-gray-900">Thông tin cá nhân</h2>
-      <p class="mt-1 text-sm/6 text-gray-600">Use a permanent address where you can receive mail.</p>
 
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div class="sm:col-span-3">
@@ -68,13 +62,15 @@
 
       </div>
         <div class="mt-6 flex items-center justify-center gap-x-6">
-    <button @click="this.updateUser(this.user._id,this.user)" type="button" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+    <button @click="this.updateUser(this.user._id,this.user)" type="button" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Lưu</button>
   </div>
 
     </div>
     <div class="relative overflow-x-auto">
-        
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    
+ 
+    <div v-if="this.checkCart">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -105,6 +101,10 @@
             </tr>
         </tbody>
     </table>
+    <button @click="DeleteCart(this.$route.params.id)" type="button" class="focus:outline-none mt-4 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Hủy đơn</button>
+
+    </div>
+    <p v-else class="text-4xl font-thin text-gray-900 dark:text-white">Quý khách chưa đặt hàng</p>
 </div>
 
   </div>
@@ -127,7 +127,8 @@ export default{
     data(){
         return{
             user:{},
-            cartItems:[]
+            cartItems:[],
+            carts:{},
         }
     },
     methods:{
@@ -145,19 +146,28 @@ export default{
         async RetrieveCart(id){
             await cartService.get(id)
                 .then(data=>{
-                    console.log(data[0])
                     data[0].items.forEach( async (element) => {
-                    let item= await productService.get(element.productId);
+                    let item= await productService.get((element.productId));
                     this.cartItems.push({
                     name: item.productname,
                     category:item.category,
                     quantity:element.quantity,
-            })
-        });
+                    })
+                
+                })
                 })
         },
+        async DeleteCart(id){
+          if(confirm("Bạn có muốn hủy đơn ?")){
+            await cartService.delete(id);
+            window.location.reload
+          }
+        }
     },
     computed:{
+      checkCart(){
+        return this.cartItems.length!=0;
+      }
     },
     mounted(){
         this.RetrieveUser(this.$route.params.id);

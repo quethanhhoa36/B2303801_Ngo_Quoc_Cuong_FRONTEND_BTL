@@ -150,6 +150,9 @@ export default{
                         quantity:this.quantity
                     })
                 }
+                toast.success('Thành công thêm vào giỏ hàng',{
+                    autoClose:3000
+                })
                 localStorage.setItem('cart',JSON.stringify(cart))
 
             }

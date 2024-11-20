@@ -27,7 +27,7 @@
   </form>
   <!-- Sign up  Link -->
   <div class="mt-6 text-center">
-    <a href="#" class="hover:underline">Sign up Here</a>
+    <a href="#" class="hover:underline"><RouterLink to="/signupUser">Đăng ký tại đây</RouterLink></a>
   </div>
 </div>
 </div>
@@ -50,7 +50,6 @@ export default{
                         .then((res)=>{
                             if(res.length){
                                 this.$router.push('/')
-                                console.log(res[0])
                                 this.login(res[0]._id)
                         } else alert("Incorrect password!");
                         })

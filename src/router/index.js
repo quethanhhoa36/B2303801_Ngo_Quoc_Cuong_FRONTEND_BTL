@@ -1,4 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
+function isAuthenticated() {
+  const token = localStorage.getItem('isLoginAdmin');
+  console.log(token);
+  return token !== null;
+}
+
 const routes = [
     {
         path: "/login",
@@ -24,17 +30,20 @@ const routes = [
     {
         path:'/dashboard',
         name:'dashboard',
-        component: () => import('../views/Dashboard.vue')  
+        component: () => import('../views/Dashboard.vue'),
+        meta: { requiresAuth: true }  
     },
     {
         path:'/viewproduct',
         name:'viewproduct',
-        component: () => import('../views/ViewProduct.vue')
+        component: () => import('../views/ViewProduct.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path:'/addproduct',
         name:'addproduct',
-        component: () => import('../views/Addproduct.vue')
+        component: () => import('../views/Addproduct.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path:'/viewproduct/:id',
@@ -66,18 +75,44 @@ const routes = [
         name:'information',
         component:()=> import('../views/InforUserPage.vue')
     },
-    {
-        path:'/admincart/:id',
-        name:'cartdetail',
-    },
+
     {
         path:'/admincart',
-        name:'admincart'
+        name:'admincart',
+        component:()=>import('../views/AdminCart.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path:'/admincart/:id',
+        name:'admincartdetail',
+        component:()=>import('../views/Invoice.vue')
+    },
+    {
+        path:'/test',
+        name:'test',
+        component:()=>import('../components/DetailCart.vue')
+    },
+    {
+        path:'/signupUser',
+        name:'signup',
+        component:()=> import('../views/CustomerSignup.vue')
     }
 
 ];
-    const router = createRouter({
+const router = createRouter({
         history: createWebHistory(import.meta.env.BASE_URL),
         routes, 
     });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isAuthenticated()) {
+      next('/login');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
 export default router;  

@@ -22,8 +22,15 @@ class CartService{
             }
         })).data
     }
-    async get(id) {
+    async getId(id){
         return (await this.api.get(`/${id}`)).data;
+    }
+    async get(id) {
+        return (await this.api.get("/one",{
+            params:{
+                userId: id
+            }
+        })).data;
     }
     async update(id, data) {
         return (await this.api.put(`/${id}`, data)).data;
@@ -31,6 +38,9 @@ class CartService{
     async delete(id) {
         return (await this.api.delete(`/${id}`)).data;
     }
+
+    async deleteId(id) {
+        return (await this.api.delete(`/one/${id}`)).data;
+    }
 }
 export default new CartService()
-
