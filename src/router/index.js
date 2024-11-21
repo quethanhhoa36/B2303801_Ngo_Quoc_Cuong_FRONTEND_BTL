@@ -96,6 +96,11 @@ const routes = [
         path:'/signupUser',
         name:'signup',
         component:()=> import('../views/CustomerSignup.vue')
+    },
+    {
+        path: "/:pathMatch(.*)*",
+        name: "notfound",
+        component: ()=> import('../views/NotFound.vue')
     }
 
 ];
